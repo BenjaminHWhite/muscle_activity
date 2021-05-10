@@ -1,0 +1,9 @@
+numpy
+tensorflow_gpu>=1.10.0
+h5py
+pandas
+Keras>=2.2.5
+tqdm
+scikit_learn
+scikit-image
+
