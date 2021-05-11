@@ -22,29 +22,34 @@ python train.py -h
 There are several arguments to the training script.
 
 ```
-  --atlases ATLAS [ATLAS ...]
-                        (Required) Atlas images to train. All atlases must have same
-                        width and height, but might have differet number of
-                        frames, as noted in the corresponding csv file.
-                        Preferably use HDF5 .h5 files, because they will be
-                        read multiple times to save runtime memory.
-  --csv CSV [CSV ...]   (Required) CSV files with five columns, with frame numbers and
-                        movement type (e.g. Switch, Rest etc).
-  --nframe NFRAMES      (Required) Total number of frames to consider while training,
-                        must be odd.
-  --outdir OUTDIR       (Required) Output directory where the trained models are written.
+ --atlases ATLAS [ATLAS ...]
+                        (Required) Atlas images (either 3D tif or HDF5 h5
+                        format) to train. All atlases must have same width and
+                        height, but may have differet number of frames, as
+                        noted in the corresponding csv file. Preferably use
+                        HDF5 .h5 files, because they will be read multiple
+                        times to save runtime memory.
+  --csv CSV [CSV ...]   (Required) CSV files with five columns, with frame
+                        numbers and movement type (e.g. Switch, Rest etc).
+  --nframe NFRAMES      (Required) Total number of frames to consider while
+                        training, must be odd.
+  --outdir OUTDIR       (Required) Output directory where the trained models
+                        are written.
   --discard DISCARD [DISCARD ...]
-                        Discard this movement from training. Default is NaN.
-                        E.g. --discard NaN Twitch. It is case sensitive.
+                        (Optional) Discard this movement from training.
+                        Default is NaN. E.g. --discard NaN Twitch. It is case
+                        sensitive.
   --basefilter BASEFILTER
-                        Base filter for Inception v3 module. Default is 16,
-                        which results in ~22million parameters.
-  --gpuids GPU          Specifc GPUs to use for training, separated by comma.
-                        E.g., --gpuids 3,4,5
+                        (Optional) Base filter for Inception v3 module.
+                        Default is 16, which results in ~23million parameters.
+  --gpuids GPU          (Optional) Specifc GPUs to use for training, separated
+                        by comma. Default 0. For multi-gpu training, use
+                        comma-separated numbers, e.g. --gpuids 3,4,5
   --initmodel INITMODEL
-                        Existing pre-trained model. If provided, the weights
-                        from the pre-trained model will be used to initiate
-                        the training.
+                        (Optional) Existing pre-trained model. If provided,
+                        the weights from the pre-trained model will be used to
+                        initiate the training.
+
 ```                      
 
 The following parameters have been used to train the network separately on each of the 5 training images. 
@@ -56,7 +61,7 @@ python train.py --atlases $ATLASIMG --csv $ATLASCSV --nframe 25 --outdir ./train
                      --gpuids 0,1,2,3 --discard NaN Twitch --basefilter 4 
 ```
 
-To estimate motion at a particular frame, its previous 12 and next 12 frames (hence **--nframe 25**) are used. The code can train in parallel using multiple GPUs via **--gpuids** argument. The  NaN and Twitch from the prediction list since we do not consider them as a motion, rather a state. To reduce overfitting, **--basefilter 4** option is used to keep the number of trainable parameters low (~1.3 million). Five trained models are located in the folder **trained_models**.
+To estimate motion at a particular frame, its previous 12 and next 12 frames (hence **--nframe 25**) are used. The code can train in parallel using multiple GPUs via **--gpuids** argument. The  NaN and Twitch from the prediction list are discarded since we do not consider them as a motion, rather a state. To reduce overfitting, **--basefilter 4** option is used to keep the number of trainable parameters low (~1.3 million). Five trained models are located in the folder **trained_models**.
 
 
 # Prediction on new image
