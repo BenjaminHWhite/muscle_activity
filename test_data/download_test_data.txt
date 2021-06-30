@@ -1,0 +1,4 @@
+1. Download the test data set from the following link:
+https://hpc.nih.gov/~roys5/muscle_activity_test_data.zip
+
+2. Unzip the downloaded zip file and keep all .h5 files in this test_data folder.
