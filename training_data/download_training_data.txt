@@ -1,0 +1,4 @@
+1. Download the training data set (CNN_training_data) from the following link:
+https://figshare.com/collections/Pupal_behavior_emerges_from_unstructured_muscle_activity_in_response_to_neuromodulation_in_Drosophila/5489637
+
+2. Unzip the downloaded zip file and keep all .h5 and .csv files in this training_data folder.
